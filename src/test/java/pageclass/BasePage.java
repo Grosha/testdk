@@ -1,3 +1,5 @@
+package pageclass;
+
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
@@ -16,17 +18,17 @@ public class BasePage implements Locators {
     }
 
     public void openDrawer() {
-        $(locatorOpenDrawer).click();
+        $(Locators.locatorOpenDrawer).click();
     }
 
-    public WebElement $(By by) {
+    private WebElement $(By by) {
         waitElement(by);
         return driver.findElement(by);
     }
 
-    public void waitElement(By element) {
+    private void waitElement(By element) {
         //wait comment
-        WebDriverWait wait = new WebDriverWait(driver, 10L);
+        WebDriverWait wait = new WebDriverWait(driver, 60L);
         try {
             wait.until(ExpectedConditions.visibilityOfElementLocated(element));
         } catch (TimeoutException exception) {
@@ -37,8 +39,31 @@ public class BasePage implements Locators {
     }
 
     public void openFeatureFromDrawer(String featureName) {
-        String locatorFeature = "//android.widget.CheckedTextView[@text,'" + featureName + "')]";
-        By locatorDrCacheFile = By.xpath(locatorFeature);
-        $(locatorDrCacheFile).click();
+        String locatorFeature = "//android.widget.CheckedTextView[@text='" + featureName + "']";
+        $(By.xpath(locatorFeature)).click();
+        waitElement(locatorOpenDrawer);
+    }
+
+    public String getMainToolbarTitle(){
+        return $(locatorToolbarStatusMain).getText().toString();
+    }
+
+    public String getToolbarTitle(){
+        return $(locatorToolbarStatus).getText().toString();
+    }
+
+    public String getFeatureNote() {
+        return $(locatorFeatureNote).getText().toString();
+    }
+
+    public void waitTitleIssues(){
+        waitElement(locatorScrollDownLines);
+    }
+
+    public void waitGreenButton(){
+        waitElement(locatorGreenButton);
+    }
+    public void waitFeatureNote(){
+        waitElement(locatorFeatureNote);
     }
 }

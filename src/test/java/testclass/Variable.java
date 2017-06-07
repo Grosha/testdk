@@ -1,6 +1,10 @@
+package testclass;
+
 public interface Variable {
     String packageDK = "com.highlyrecommendedapps.droidkeeper";
     String mainActivity = ".ui.MainActivity";
+
+    String SYSTEM_STATUS = "System status";
 
     String SPEED_BOOSTER = "Speed Booster";
     String SYSTEM_CLEANER = "System Cleaner";
@@ -25,4 +29,11 @@ public interface Variable {
     String TOOLBOX = "Toolbox";
     String SETTINGS = "Settings";
     String ABOUT_PAGE = "About Page";
+
+    String CACHE_FILE_NOTE = "Safely remove cache files to free up extra space.";
+    String UNINSTALLER_NOTE = "Choose apps to uninstall";
+    String AUTOLAUNCHAPP_NOTE = "Select apps autolaunching at startup";
+    String MEMOTY_CLEAN_UP_NOTE = "Stop background apps to increase your performance";
+    String ADVANED_JUNK_NOTE = "Get rid of app leftovers consuming memory space.";
+    String GAME_BOOSTER_NOTE = "Click on the Game to boost";
 }
