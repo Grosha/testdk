@@ -11,22 +11,22 @@ import java.util.NoSuchElementException;
 
 
 public class BasePage implements Locators {
-    private  AndroidDriver driver;
+    protected   AndroidDriver driver;
 
     public BasePage(AndroidDriver driver) {
         this.driver = driver;
     }
 
     public void openDrawer() {
-        $(Locators.locatorOpenDrawer).click();
+        $(locatorOpenDrawer).click();
     }
 
-    private WebElement $(By by) {
+    protected WebElement $(By by) {
         waitElement(by);
         return driver.findElement(by);
     }
 
-    private void waitElement(By element) {
+    protected void waitElement(By element) {
         //wait comment
         WebDriverWait wait = new WebDriverWait(driver, 60L);
         try {
@@ -66,4 +66,9 @@ public class BasePage implements Locators {
     public void waitFeatureNote(){
         waitElement(locatorFeatureNote);
     }
+
+    public void scrollTo(String elementName){
+        driver.scrollTo(elementName);
+    }
+
 }

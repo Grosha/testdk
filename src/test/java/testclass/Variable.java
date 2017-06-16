@@ -36,4 +36,13 @@ public interface Variable {
     String MEMOTY_CLEAN_UP_NOTE = "Stop background apps to increase your performance";
     String ADVANED_JUNK_NOTE = "Get rid of app leftovers consuming memory space.";
     String GAME_BOOSTER_NOTE = "Click on the Game to boost";
+    String PHONE_COOLER_NOTE = "Your device runs well, but we recommend you to stop these apps";
+    String MAGIC_STOPPER_NOTE = "Choose apps to stop from running on background. Increase your battery life for up to 50%.";
+    String BATTERY_CONSUMTION_NOTE = "Stop unneeded apps consuming your device's battery life";
+    String ENERGY_MODE_NOTE = "Choose energy mode or create your own to easily manage battery consumption";
+    String APPLOCKER_NOTE = "Choose apps to protect from unauthorised access";
+
+    //scroll block name
+    String SB_BT_PHOTO_HIDER = "Choose photos now";
+    String SB_BT_AUTOLAUNCH_APP = "Manage apps";
 }

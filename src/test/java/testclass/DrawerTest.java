@@ -16,7 +16,7 @@ public class DrawerTest extends SetUpAppium {
 
 
     @DataProvider(name = "feature")
-    public static Object[][] dataSendAddClick() {
+    public static Object[][] featureData() {
         return new Object[][]{
                 {CACHE_FILES, CACHE_FILE_NOTE},
                 {MEMORY_CLEANUP, MEMOTY_CLEAN_UP_NOTE},
@@ -24,6 +24,11 @@ public class DrawerTest extends SetUpAppium {
                 {GAME_BOOSTER, GAME_BOOSTER_NOTE},
                 {AUTOLAUNCH_APPS, AUTOLAUNCHAPP_NOTE},
                 {UNINSTALL_OF_APPS, UNINSTALLER_NOTE},
+                {PHONE_COOLER, PHONE_COOLER_NOTE},
+                {APPLOCKER, APPLOCKER_NOTE},
+                {ENERGY_MODE, ENERGY_MODE_NOTE},
+                {MAGIC_STOPPER, MAGIC_STOPPER_NOTE},
+                {BATTERY_CONSUMPTION, BATTERY_CONSUMTION_NOTE},
         };
     }
 
@@ -33,11 +38,17 @@ public class DrawerTest extends SetUpAppium {
         Assert.assertEquals(page.getMainToolbarTitle(), SYSTEM_STATUS);
         page.waitTitleIssues();
         page.openDrawer();
-        page.openFeatureFromDrawer(featureName);
+        /*try {
+            page.openFeatureFromDrawer(featureName);
+        }catch (NoSuchElementException exception){*/
+            page.scrollTo(featureName);
+            page.openFeatureFromDrawer(featureName);
+        //}
         assertEquals(page.getToolbarTitle().toUpperCase(), featureName.toUpperCase());
         page.waitFeatureNote();
         assertEquals(page.getFeatureNote(), featureNote);
     }
+
 
 
 }
