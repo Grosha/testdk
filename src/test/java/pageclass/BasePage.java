@@ -1,17 +1,21 @@
 package pageclass;
 
 import io.appium.java_client.android.AndroidDriver;
-import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.NoSuchElementException;
 
 
 public class BasePage implements Locators {
-    protected   AndroidDriver driver;
+    protected AndroidDriver driver;
 
     public BasePage(AndroidDriver driver) {
         this.driver = driver;
@@ -44,11 +48,11 @@ public class BasePage implements Locators {
         waitElement(locatorOpenDrawer);
     }
 
-    public String getMainToolbarTitle(){
+    public String getMainToolbarTitle() {
         return $(locatorToolbarStatusMain).getText().toString();
     }
 
-    public String getToolbarTitle(){
+    public String getToolbarTitle() {
         return $(locatorToolbarStatus).getText().toString();
     }
 
@@ -56,19 +60,32 @@ public class BasePage implements Locators {
         return $(locatorFeatureNote).getText().toString();
     }
 
-    public void waitTitleIssues(){
+    public void waitTitleIssues() {
         waitElement(locatorScrollDownLines);
     }
 
-    public void waitGreenButton(){
+    public void waitGreenButton() {
         waitElement(locatorGreenButton);
     }
-    public void waitFeatureNote(){
+
+    public void waitFeatureNote() {
         waitElement(locatorFeatureNote);
     }
 
-    public void scrollTo(String elementName){
+    public void scrollTo(String elementName) {
         driver.scrollTo(elementName);
+    }
+
+    public void createScreenShots(String featureName) throws IOException {
+        File screenshot = driver.getScreenshotAs(OutputType.FILE);
+        //create dir with given folder name
+        DateFormat df =new SimpleDateFormat("dd-MMM-yyyy__hh_mm_ssaa");
+        String folderName = df.toString();
+        new File(folderName).mkdir();
+        //Setting file name
+        String fileName = featureName + ".png";
+        //coppy screenshot file into screenshot folder.
+        FileUtils.copyFile(screenshot, new File(folderName + "/" + fileName));
     }
 
 }

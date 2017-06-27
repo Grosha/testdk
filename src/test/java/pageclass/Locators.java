@@ -19,5 +19,17 @@ public interface Locators {
     By locatorCSequrityEnhancerTitle = By.xpath("//android.widget.TextView[contains(@text,'Battery Saver')]");
     By locatorCoolerMenu = By.id("cooler_menu");
     By locatorSBButton = By.id("sb_item_button");
+    By locatorQFButton = By.id("quick-fix");
+    By locatorCQFButton = By.id("camcel_quick-fix");
+    By locatorQFBoostText = By.id("quick-fix");
+    By locatorQFJunkText = By.id("quick-fix");
+    By locatorScrollDownButton = By.id("scroll_down");
+
+    //reminder
+    By locatorDismissReminder = By.id("quick-fix");
+
+
+    //after fix state
+    By locatorAfterFixFedback = By.id("quick-fix");
 
 }

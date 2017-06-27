@@ -45,4 +45,7 @@ public interface Variable {
     //scroll block name
     String SB_BT_PHOTO_HIDER = "Choose photos now";
     String SB_BT_AUTOLAUNCH_APP = "Manage apps";
+
+    // after fix state
+    String FEEDBACK_AFTERFIX_QUICKFIX = "";
 }

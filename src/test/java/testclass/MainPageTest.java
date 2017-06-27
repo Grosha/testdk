@@ -1,10 +1,11 @@
 package testclass;
 
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pageclass.MainPage;
+
+import java.io.IOException;
 
 
 public class MainPageTest extends SetUpAppium {
@@ -26,10 +27,11 @@ public class MainPageTest extends SetUpAppium {
 
 
     @Test(dataProvider = "category")
-    public void testOpenCategory(String categoryName) {
+    public void testOpenCategory(String categoryName) throws IOException {
         Assert.assertEquals(mainPage.getMainToolbarTitle(), SYSTEM_STATUS);
         mainPage.waitTitleIssues();
         mainPage.openCategory(categoryName);
+        mainPage.createScreenShots(categoryName);
         Assert.assertEquals(mainPage.getToolbarTitle(), categoryName);
     }
 
@@ -39,6 +41,32 @@ public class MainPageTest extends SetUpAppium {
         mainPage.waitTitleIssues();
         mainPage.openCooler();
         Assert.assertEquals(mainPage.getToolbarTitle(), PHONE_COOLER);
+    }
+
+    @Test
+    public void testQuickFix() {
+        Assert.assertEquals(mainPage.getMainToolbarTitle(), SYSTEM_STATUS);
+        mainPage.waitTitleIssues();
+        mainPage.clickQuickFix();
+        mainPage.waitTextBoostingPerformance();
+        mainPage.waitTextCleaningJunk();
+        mainPage.dismissPopApReminder();
+        Assert.assertEquals(mainPage.getAfterFixState(), FEEDBACK_AFTERFIX_QUICKFIX);
+        //back
+        Assert.assertEquals(mainPage.getMainToolbarTitle(), SYSTEM_STATUS);
+        //check status excellent
+    }
+
+    @Test
+    public void testQuickFixCancel() {
+        Assert.assertEquals(mainPage.getMainToolbarTitle(), SYSTEM_STATUS);
+        mainPage.waitTitleIssues();
+        mainPage.clickQuickFix();
+        mainPage.waitTextBoostingPerformance();
+        mainPage.cancelQuickFix();
+        mainPage.waitScrollDownButton();
+        //assert first block
+        Assert.assertEquals(mainPage.getAfterFixState(), FEEDBACK_AFTERFIX_QUICKFIX);
     }
 
     @Test
