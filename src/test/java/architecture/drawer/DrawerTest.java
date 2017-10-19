@@ -7,11 +7,13 @@ import org.testng.annotations.Test;
 import architecture.SetUpAppium;
 
 import static org.testng.Assert.assertEquals;
+import org.testng.asserts.SoftAssert;
 
 public class DrawerTest extends SetUpAppium {
-    public DrawerHelper drawerHelper;
-    public MainPageHelper mainPageHelper;
-    public BaseFeatureHelper baseFeatureHelper;
+    private DrawerHelper drawerHelper;
+    private MainPageHelper mainPageHelper;
+    private BaseFeatureHelper baseFeatureHelper;
+    private SoftAssert softAssert = new SoftAssert();
 
     public void initDriver() {
         drawerHelper = new DrawerHelper(driver);
@@ -45,15 +47,17 @@ public class DrawerTest extends SetUpAppium {
         drawerHelper.openDrawer();
         drawerHelper.scrollTo(featureName);
         drawerHelper.openFeatureFromDrawer(featureName);
-        assertEquals(mainPageHelper.findToolbarTitle().getText().toUpperCase(), featureName.toUpperCase());
+        softAssert.assertEquals(mainPageHelper.findToolbarTitle().getText().toUpperCase(), featureName.toUpperCase());
 
         baseFeatureHelper.waitFeatureNote();
-        assertEquals(baseFeatureHelper.findFeatureNote().getText().toString(), featureNote);
+        softAssert.assertEquals(baseFeatureHelper.findFeatureNote().getText().toString(), featureNote);
+        softAssert.assertAll();
     }
 
     @Test
     public void testCloseDrawer(){
         drawerHelper.openDrawer();
         driver.navigate().back();
+        assertEquals(mainPageHelper.findMainToolbarStatus().getText().toString(), MainPageHelper.SYSTEM_STATUS, "Wrong system status om main page");
     }
 }

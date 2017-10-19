@@ -37,6 +37,7 @@ public class BaseFeatureHelper extends BaseHelper {
     public static String ADVANCED_JUNK_NOTE = "Get rid of app leftovers consuming memory space.";
     public static String GAME_BOOSTER_NOTE = "Click on the Game to boost";
     public static String PHONE_COOLER_NOTE = "Your device runs well, but we recommend you to stop these apps";
+    public static String MAGIC_STOPPER_NOTE = "Your device runs well, but we recommend you to stop these apps";
 
     public static String BATTERY_CONSUMTION_NOTE = "Stop unneeded apps consuming your device's battery life";
     public static String ENERGY_MODE_NOTE = "Choose energy mode or create your own to easily manage battery consumption";

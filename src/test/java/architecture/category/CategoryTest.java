@@ -5,26 +5,25 @@ import architecture.feature.BaseFeatureHelper;
 import architecture.mainpage.MainPageHelper;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import pageclass.category.CategoryPage;
 import architecture.SetUpAppium;
+import org.testng.asserts.SoftAssert;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 public class CategoryTest extends SetUpAppium {
-    private CategoryPage categoryPage;
     private CategoryHelper categoryHelper;
     private MainPageHelper mainPageHelper;
     private BaseFeatureHelper baseFeatureHelper;
+    private SoftAssert softAssert;
 
     public void initDriver() {
         mainPageHelper = new MainPageHelper(driver);
-        categoryPage = new CategoryPage(driver);
         categoryHelper = new CategoryHelper(driver);
         baseFeatureHelper = new BaseFeatureHelper(driver);
+        softAssert = new SoftAssert();
     }
 
     @DataProvider(name = "categoryData")
@@ -65,19 +64,20 @@ public class CategoryTest extends SetUpAppium {
     public void testCategories(String categoryName, String resultTitle, String resulSubtitle, String infoTitle, String infoText, String buttonName, ArrayList<String> featureName) throws IOException {
         mainPageHelper.waitScrollDownImage();
         categoryHelper.findCategory(categoryName).click();
-        assertEquals(categoryHelper.findToolbarTitle().getText().toString().toUpperCase(), categoryName.toUpperCase(), "Opened wrong architecture.category");
-        assertEquals(categoryHelper.findCategoryInfoTitle().getText().toString(), infoTitle, "Incorrect title for architecture.category");
-        assertEquals(categoryHelper.findCategoryInfoText().getText().toString(), infoText, "Incorrect info text for architecture.category");
-        assertEquals(categoryHelper.findCategoryActionButton().getText().toString(), buttonName, "Incorrect action button name for architecture.category");
-        assertEquals(categoryHelper.findCategoryResultTitle().getText().toString(), resultTitle, "Incorrect result title for architecture.category");
-        assertEquals(categoryHelper.findCategoryResultSubTitle().getText().toString(), resulSubtitle, "Incorrect result subtitle for architecture.category");
+        softAssert.assertEquals(categoryHelper.findToolbarTitle().getText().toString().toUpperCase(), categoryName.toUpperCase(), "Opened wrong architecture.category");
+        softAssert.assertEquals(categoryHelper.findCategoryInfoTitle().getText().toString(), infoTitle, "Incorrect title for architecture.category");
+        softAssert.assertEquals(categoryHelper.findCategoryInfoText().getText().toString(), infoText, "Incorrect info text for architecture.category");
+        softAssert.assertEquals(categoryHelper.findCategoryActionButton().getText().toString(), buttonName, "Incorrect action button name for architecture.category");
+        softAssert.assertEquals(categoryHelper.findCategoryResultTitle().getText().toString(), resultTitle, "Incorrect result title for architecture.category");
+        softAssert.assertEquals(categoryHelper.findCategoryResultSubTitle().getText().toString(), resulSubtitle, "Incorrect result subtitle for architecture.category");
 
         for (String feature:featureName) {
-            assertTrue(categoryHelper.findFeatureName(feature).isDisplayed(), "Feature " + feature + " was not shown in architecture.category " + categoryName);
+            softAssert.assertTrue(categoryHelper.findFeatureName(feature).isDisplayed(), "Feature " + feature + " was not shown in architecture.category " + categoryName);
         }
-        assertTrue(categoryHelper.findToolbarToolbarMenu().isDisplayed(), "Toolbox menu icon wasn't shown in the toolbar");
-        assertTrue(categoryHelper.findCategoryImage().isDisplayed(), "Category icon wasn't shown");
-        assertTrue(categoryHelper.findCategoryImage().isDisplayed(), "Category icon wasn't shown");
+        softAssert.assertTrue(categoryHelper.findToolbarToolbarMenu().isDisplayed(), "Toolbox menu icon wasn't shown in the toolbar");
+        softAssert.assertTrue(categoryHelper.findCategoryImage().isDisplayed(), "Category icon wasn't shown");
+        softAssert.assertTrue(categoryHelper.findCategoryImage().isDisplayed(), "Category icon wasn't shown");
+        softAssert.assertAll();
     }
 
     @DataProvider(name = "categoryFeature")
@@ -100,10 +100,10 @@ public class CategoryTest extends SetUpAppium {
         mainPageHelper.waitScrollDownImage();
         categoryHelper.findCategory(categoryName).click();
         categoryHelper.findFeatureName(featureName).isEnabled();
-//        if (featureNote != null) {
-//            baseFeatureHelper.waitFeatureNote();
-//            assertEquals(baseFeatureHelper.findFeatureNote().getText().toString(), featureNote, "Feature note is incorrect for architecture.feature " + featureName);
-//        }
+        if (featureNote != null) {
+            baseFeatureHelper.waitFeatureNote();
+            assertEquals(baseFeatureHelper.findFeatureNote().getText().toString(), featureNote, "Feature note is incorrect for architecture.feature " + featureName);
+        }
     }
 
     @DataProvider(name = "categoryName")
@@ -121,35 +121,6 @@ public class CategoryTest extends SetUpAppium {
         mainPageHelper.waitScrollDownImage();
         categoryHelper.findCategory(categoryName).click();
         driver.navigate().back();
-        assertEquals(mainPageHelper.findMainToolbarStatus().getText().toString(), SYSTEM_STATUS, "Wrong system status");
-    }
-
-    @Test()
-    public void testProtectFromCategory() throws IOException {
-        assertEquals(categoryPage.getMainToolbarTitle(), SYSTEM_STATUS, "Main screen wasn't opened");
-        categoryPage.waitTitleIssues();
-        categoryPage.openCategory(SECURITY_ENHANCER);
-        assertEquals(categoryPage.getToolbarTitle(), SECURITY_ENHANCER, "Opened wrong architecture.category");
-        categoryPage.clickActionCategoryButton(CATEGORY_SECURITY_BUTTON_PROTECT);
-        categoryPage.createScreenShots(SECURITY_ENHANCER);
-        categoryPage.waitAfterFixState();
-        assertEquals(categoryPage.getAfterFixTitle(), TITLE_AFTERFIX_ANTIVIRUS, "Wrong title in after fix state after scanning");
-        assertEquals(categoryPage.getAfterFixSubtitle(), SUBTITLE_AFTERFIX_ANTIVIRUS, "Wrong subtitle in after fix state after scanning");
-        categoryPage.back();
-        categoryPage.openCategory(SECURITY_ENHANCER);
-        assertEquals(categoryPage.getCategoryResultTitle(), SECURITY_ENHANCER_TITLE_SAFE, "Wrong title in architecture.category after scanning");
-        assertEquals(categoryPage.categoryButtonIsEnable(), false, "Button is presented in architecture.category");
-    }
-
-    @Test()
-    public void testProlongFromCategory() throws IOException {
-        assertEquals(categoryPage.getMainToolbarTitle(), SYSTEM_STATUS, "Main screen wasn't opened");
-        categoryPage.waitTitleIssues();
-        categoryPage.openCategory(BATTERY_SAVER);
-        assertEquals(categoryPage.getToolbarTitle(), BATTERY_SAVER, "Opened wrong architecture.category");
-        categoryPage.clickActionCategoryButton(CATEGORY_BATTERY_BUTTON_PROLONG);
-        categoryPage.createScreenShots(BATTERY_SAVER);
-        categoryPage.waitToolbarTitle();
-        assertEquals(categoryPage.getToolbarTitle().toUpperCase(), MAGIC_STOPPER.toUpperCase(), "Opened wrong architecture.category");
+        assertEquals(mainPageHelper.findMainToolbarStatus().getText().toString(), MainPageHelper.SYSTEM_STATUS, "Wrong system status on main page");
     }
 }
